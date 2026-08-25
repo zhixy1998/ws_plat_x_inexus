@@ -2,6 +2,7 @@ package com.persee.workstation.demo.mqtt.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.MessagingGateway;
@@ -92,13 +93,14 @@ public class MqttConfig {
     }
 
     @Bean
+    @DependsOn("embeddedMqttBroker") // 保证内嵌 broker 先启动，避免首次连接被拒
     public MessageProducer inbound() {
         String[] topics = subscribeTopics.split(",");
         int[] qos = new int[topics.length];
         for (int i = 0; i < topics.length; i++) qos[i] = defaultQos;
         MqttPahoMessageDrivenChannelAdapter adapter =
                 new MqttPahoMessageDrivenChannelAdapter(brokerUrl, clientId + "-sub",
-                        topics);
+                        mqttClientFactory(), topics);
         adapter.setCompletionTimeout(5000);
         // 注意：Spring Integration 7.x 已移除 setRecoveryInterval，
         // 断线重连由上面 MqttConnectOptions.setAutomaticReconnect(true) 负责
@@ -107,18 +109,5 @@ public class MqttConfig {
         adapter.setQos(qos);
         adapter.setOutputChannel(mqttInputChannel());
         return adapter;
-    }
-
-    @Bean
-    @ServiceActivator(inputChannel = "mqttInputChannel")
-    public MessageHandler handler() {
-        return new MessageHandler() {
-
-            @Override
-            public void handleMessage(Message<?> message) throws MessagingException {
-                System.out.println(message.getPayload());
-            }
-
-        };
     }
 }

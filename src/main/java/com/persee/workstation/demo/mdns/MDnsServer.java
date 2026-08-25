@@ -1,15 +1,19 @@
-package com.persee.workstation.demo;
+package com.persee.workstation.demo.mdns;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import org.springframework.stereotype.Component;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
-
+@Component("mDnsServer")
 public class MDnsServer {
 
     private static JmDNS jmDNS;
-
+    @PostConstruct
     public static void startMDns() throws Exception {
         InetAddress localAddress = InetAddress.getLocalHost();
         jmDNS = JmDNS.create(localAddress);
@@ -33,19 +37,16 @@ public class MDnsServer {
         System.out.println("mDNS服务发布成功 _myapp._tcp port:8080");
     }
 
-    // 关闭，程序关闭调用
+    @PreDestroy
     public static void stopMDns() {
         try {
             if(jmDNS != null) {
                 jmDNS.unregisterAllServices();
                 jmDNS.close();
+                System.out.println("🔻mDNS服务停止  port:8080");
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        startMDns();
     }
 }
