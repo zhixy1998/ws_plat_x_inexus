@@ -1,4 +1,4 @@
-package com.persee.workstation.demo.model;
+package com.persee.workstation.demo.stomp.model;
 
 /**
  * 前端 sendMessage 时 data 字段的承载结构

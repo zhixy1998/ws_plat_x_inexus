@@ -1,4 +1,4 @@
-package com.persee.workstation.demo.interceptor;
+package com.persee.workstation.demo.stomp.interceptor;
 
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;

@@ -1,17 +1,9 @@
-package com.persee.workstation.demo.controller;
+package com.persee.workstation.demo.stomp.controller;
 
-import com.persee.workstation.demo.model.OperationData;
-import com.persee.workstation.demo.model.OperationMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Map;
-
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * STOMP 消息处理器

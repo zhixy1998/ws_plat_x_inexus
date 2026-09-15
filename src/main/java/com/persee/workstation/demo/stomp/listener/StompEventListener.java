@@ -1,4 +1,4 @@
-package com.persee.workstation.demo.listener;
+package com.persee.workstation.demo.stomp.listener;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.broker.BrokerAvailabilityEvent;

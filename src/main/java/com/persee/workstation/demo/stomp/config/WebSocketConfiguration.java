@@ -1,6 +1,6 @@
-package com.persee.workstation.demo.config;
+package com.persee.workstation.demo.stomp.config;
 
-import com.persee.workstation.demo.interceptor.StompLogInterceptor;
+import com.persee.workstation.demo.stomp.interceptor.StompLogInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
